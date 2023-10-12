@@ -1,5 +1,5 @@
 #Class for each individual month of data
-setClass(
+methods::setClass(
   "sbgridCapsules",
   representation(
     month = "character",
@@ -23,28 +23,28 @@ capsulesValidObject <-function(object){
   return(TRUE)
 }
 
-setMethod("initialize", "sbgridCapsules",
+methods::setMethod("initialize", "sbgridCapsules",
           function(.Object, month, year, data) {
             .Object@month <- month
             .Object@year <- year
             .Object@data <- data
             capsulesValidObject(.Object)
             .Object@data <- .Object@data %>%
-              mutate(exitcode = as.numeric(exitcode),
+              dplyr::mutate(exitcode = as.numeric(exitcode),
                      runtime = as.numeric(runtime)) %>%
-              filter(!is.na(exitcode)) %>%
-              group_by(user, grid, arch, os, site, exitcode,
+              dplyr::filter(!is.na(exitcode)) %>%
+              dplyr::group_by(user, grid, arch, os, site, exitcode,
                        title, version, program) %>%
-              summarise(counts = n(), runtime = sum(runtime),
+              dplyr::summarise(counts = dplyr::n(), runtime = sum(runtime),
                         successes = sum(exitcode == 0)) %>%
-              mutate(month = .Object@month,
+              dplyr::mutate(month = .Object@month,
                      year = .Object@year)
             return(.Object)
           }
 )
 
 #Class for holding all the individual months and the summaries
-setClass(
+methods::setClass(
   "combinedSbgridCapsules",
   representation(
     logs = "list",
@@ -58,7 +58,7 @@ setClass(
 )
 
 # Define an initialization method for combinedSbgridCapsules
-setMethod("initialize", "combinedSbgridCapsules",
+methods::setMethod("initialize", "combinedSbgridCapsules",
           function(.Object, logs) {
             .Object@log_index <- data.frame(index = NULL, time.id = NULL)
             for(log in logs){

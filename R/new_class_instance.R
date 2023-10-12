@@ -17,13 +17,13 @@ sbgridCapsules <- function (month, year, data, file_path) {
   }
 
   if("time" %in% colnames(data)){
-    data <- data %>% select(-time)
+    data <- data %>% dplyr::select(-time)
   }
 
-  return(new("sbgridCapsules", month = month, year = year, data = data))
+  return(methods::new("sbgridCapsules", month = month, year = year, data = data))
 
 }
 
 combinedSbgridCapsules <- function(logs) {
-  new("combinedSbgridCapsules", logs = logs)
+  methods::new("combinedSbgridCapsules", logs = logs)
 }

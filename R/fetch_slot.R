@@ -1,12 +1,12 @@
 # Method to get an sbgridCapsules from combinedSbgridCapsules
-setGeneric(
+methods::setGeneric(
   "getLog",
   function(object, month, year) {
     standardGeneric("getLog")
   }
 )
 
-setMethod(
+methods::setMethod(
   "getLog",
   signature(object = "combinedSbgridCapsules"),
   function(object, month, year) {
@@ -18,16 +18,16 @@ setMethod(
 )
 
 
-setGeneric("getSummary",
+methods::setGeneric("getSummary",
            function(object, data_type) standardGeneric("getSummary"))
-setMethod("getSummary",
+methods::setMethod("getSummary",
           signature = c(object="combinedSbgridCapsules", data_type = "missing"),
           function(object, data_type){
-            return(slotNames(object))
+            return(methods::slotNames(object))
           })
-setMethod("getSummary",
+methods::setMethod("getSummary",
           signature = c(object="combinedSbgridCapsules", data_type = "character"),
           function(object, data_type){
-            current_data <- slot(object, data_type)
+            current_data <- methods::slot(object, data_type)
             return(current_data)
           })
